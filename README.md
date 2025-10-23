@@ -27,8 +27,8 @@ your AirPlay picker.
 
 TODO:
 
-* WiFi support (currently uses `eth0`)
-* Automate multi USB sound card setup (need to create new config files)
-* Hostname persistence
-* ssh host key persistence
-* Friendly names for the instances
+* [ ] WiFi support (currently uses `eth0`)
+* [x] Automate multi USB sound card setup (need to create new config files)
+* [x] Hostname persistence
+* [x] ssh host key persistence
+* [ ] Friendly names for the instances
