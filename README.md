@@ -17,3 +17,18 @@ git clone --recursive --shallow-submodules https://github.com/osresearch/shairpo
 cd shairport-pi
 make
 ```
+
+Then go get a cup of coffee.  It takes about 26 minutes on my machine
+and requires about 6 GB of space.  If all goes well a 150 MB `sdcard.img`
+will be in the top level directory for flashing onto the Pi.
+
+Boot the pi on the ethernet and it should show up as `audio-ABCDEF` in
+your AirPlay picker.
+
+TODO:
+
+* WiFi support (currently uses `eth0`)
+* Automate multi USB sound card setup (need to create new config files)
+* Hostname persistence
+* ssh host key persistence
+* Friendly names for the instances
