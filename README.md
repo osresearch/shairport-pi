@@ -25,10 +25,23 @@ will be in the top level directory for flashing onto the Pi.
 Boot the pi on the ethernet and it should show up as `audio-ABCDEF` in
 your AirPlay picker.
 
+## Naming the host and channels
+
+To give the device a friendly hostname, create `/boot/hostname`.
+
+To name the channels, create `/boot/name.N` where N is from 0 to 5.
+0 is the built-in sound hardware on the Pi and 1-4 are the USB ports.
+When viewed from the front they are assigned:
+
+```
+3  1  Ether
+4  2  -Net
+```
+
 TODO:
 
 * [ ] WiFi support (currently uses `eth0`)
 * [x] Automate multi USB sound card setup (need to create new config files)
 * [x] Hostname persistence
 * [x] ssh host key persistence
-* [ ] Friendly names for the instances
+* [X] Friendly names for the audio channels

@@ -20,10 +20,36 @@ for card in /sys/class/sound/card* ; do
         num="$(echo $card | sed 's/^.*[^0-9]\([0-9]*\)$/\1/')"
 	port="$(expr 7000 + $num)"
 	config="/tmp/shairport-sync.$num.conf"
+
+	# find the USB port that this audio card is plugged into
+	dev="$(readlink $card)"
+	if echo "$dev" | grep -q platform/soc ; then
+		# this is the builtin hardware sound devi
+		id=0
+		echo "$card: Builtin audio"
+	elif echo "$dev" | grep -q usb ; then
+		# this is a usb, with up to four slots
+		id="$(echo $dev | sed 's/.*\/[0-9]-[0-9]\.\([0-9]\):1.0\/sound\/card.*/\1/')"
+		echo "$card: USB port $id"
+	else
+		# this is unkown, so we won't use it
+		id=XXX
+	fi
+
+	# see if there is a file on the boot partition that names
+	# this channel
+	if [ -r "/tmp/boot/name.$id" ] ; then
+		name="$(cat /tmp/boot/name.$id)"
+		echo "$card: $name ($id)"
+	else
+		name="audio-$id"
+		echo "$card: No friendly name"
+	fi
+	
 	cat > "$config" <<EOF
 general =
 {
-        name = "audio-$num";
+        name = "$name";
         output_backend = "alsa";
 	port = $port;
 	airplay_device_id_offset = $num;
@@ -36,7 +62,7 @@ alsa =
 
 EOF
 
-        echo "Start shairport-sync.$num"
+        echo "Start shairport-sync.$num: $name"
         #start-stop-daemon -S -q --exec
         /usr/bin/shairport-sync \
                 --justDaemoniseNoPIDFile \
