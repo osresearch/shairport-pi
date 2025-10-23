@@ -45,3 +45,4 @@ TODO:
 * [x] Hostname persistence
 * [x] ssh host key persistence
 * [X] Friendly names for the audio channels
+* [x] Preserve config if only the `mmcblk0p2` image is overwritten
