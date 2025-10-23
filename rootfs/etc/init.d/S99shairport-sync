@@ -38,8 +38,8 @@ for card in /sys/class/sound/card* ; do
 
 	# see if there is a file on the boot partition that names
 	# this channel
-	if [ -r "/tmp/boot/name.$id" ] ; then
-		name="$(cat /tmp/boot/name.$id)"
+	if [ -r "/boot/name.$id" ] ; then
+		name="$(cat /boot/name.$id)"
 		echo "$card: $name ($id)"
 	else
 		name="audio-$id"

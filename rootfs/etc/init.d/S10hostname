@@ -8,12 +8,11 @@ fi
 BOOT_DEV=/dev/mmcblk0p1
 
 if ! grep -q "$BOOT_DEV" "/proc/mounts" ; then
-	mkdir -p /tmp/boot
-	mount -o ro "$BOOT_DEV" /tmp/boot
+	mount -o ro "$BOOT_DEV" /boot
 fi
 
 if -r "/tmp/boot/hostname" ; then
-	hostname "$(cat /tmp/boot/hostname)"
+	hostname "$(cat /boot/hostname)"
 else
 	hostname audio-"`ifconfig eth0 | grep HWaddr | sed -e 's/.*HWaddr //' | tr -d :`"
 fi

@@ -7,7 +7,7 @@ if [ "$1" == "stop" ]; then
 	exit 0
 fi
 
-BOOT_DIR=/tmp/boot
+BOOT_DIR=/boot
 KEY_FILE="$BOOT_DIR/dropbear_ecdsa_host_key"
 KEY_DIR="/var/run/dropbear"
 if [ ! -r "$KEY_FILE" ]; then
