@@ -1,0 +1,47 @@
+#! /bin/sh
+# Build configuration files and start a shairport sync for each sound card
+
+# Additional options that are passed to Shairport Sync
+OPTIONS="-d"
+
+if [ "$1" == "stop" ]; then
+        exec killall shairport-sync
+fi
+if [ "$1" == "restart" ]; then
+        killall shairport-sync
+fi
+
+# make sure the modules are loaded
+echo "Loading modules"
+modprobe snd_bcm2835
+modprobe snd-usb-audio
+
+for card in /sys/class/sound/card* ; do
+        num="$(echo $card | sed 's/^.*[^0-9]\([0-9]*\)$/\1/')"
+	port="$(expr 7000 + $num)"
+	config="/tmp/shairport-sync.$num.conf"
+	cat > "$config" <<EOF
+general =
+{
+        name = "audio-$num";
+        output_backend = "alsa";
+	port = $port;
+	airplay_device_id_offset = $num;
+};
+
+alsa =
+{
+        output_device = "default:$num";
+};
+
+EOF
+
+        echo "Start shairport-sync.$num"
+        #start-stop-daemon -S -q --exec
+        /usr/bin/shairport-sync \
+                --justDaemoniseNoPIDFile \
+		--configfile "$config" \
+
+        sleep 1
+done
+

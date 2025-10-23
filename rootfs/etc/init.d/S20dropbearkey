@@ -1,0 +1,22 @@
+#! /bin/sh
+# Generate the ssh key files in the /boot partition
+# Assumes that the hostname setup has left the directory mounted
+
+if [ "$1" == "stop" ]; then
+	echo "Nothing to stop"
+	exit 0
+fi
+
+BOOT_DIR=/tmp/boot
+KEY_FILE="$BOOT_DIR/dropbear_ecdsa_host_key"
+KEY_DIR="/var/run/dropbear"
+if [ ! -r "$KEY_FILE" ]; then
+	echo "Generating ssh host key"
+	mount -o rw,remount "$BOOT_DIR"
+	dropbearkey -f "$KEY_FILE" -t ecdsa
+	mount -o ro,remount "$BOOT_DIR"
+fi
+
+echo "Installing ssh host key"
+mkdir -p "$KEY_DIR"
+cp "$KEY_FILE" "$KEY_DIR"

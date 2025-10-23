@@ -1,23 +1,19 @@
 #! /bin/sh
 
-case "$1" in
-    start)
-	printf "Loading modules"
-	modprobe snd_bcm2835
+if [ "$1" == "stop" ]; then
+	echo "Nothing to stop"
+	exit 0
+fi
+
+BOOT_DEV=/dev/mmcblk0p1
+
+if ! grep -q "$BOOT_DEV" "/proc/mounts" ; then
+	mkdir -p /tmp/boot
+	mount -o ro "$BOOT_DEV" /tmp/boot
+fi
+
+if -r "/tmp/boot/hostname" ; then
+	hostname "$(cat /tmp/boot/hostname)"
+else
 	hostname audio-"`ifconfig eth0 | grep HWaddr | sed -e 's/.*HWaddr //' | tr -d :`"
-	[ $? = 0 ] && echo "OK" || echo "FAIL"
-	;;
-    stop)
-	printf "Not stoping"
-	[ $? = 0 ] && echo "OK" || echo "FAIL"
-	;;
-    restart)
-	$0 stop
-	sleep 1
-	$0 start
-	;;
-    *)
-	echo "Usage: $0 {start|stop|restart}"
-	exit 1
-	;;
-esac
+fi
