@@ -38,6 +38,12 @@ When viewed from the front they are assigned:
 4  2  -Net
 ```
 
+The cheap USB sound cards don't fit together, so they need to have their
+shells removed and wrapped in Kapton so they don't short each other.
+
+For some reason the Pi runs out of USB bandwidth after two sound cards,
+so for now they are limited to three outputs (two USB, one builtin).
+
 TODO:
 
 * [ ] WiFi support (currently uses `eth0`)
@@ -46,3 +52,4 @@ TODO:
 * [x] ssh host key persistence
 * [X] Friendly names for the audio channels
 * [x] Preserve config if only the `mmcblk0p2` image is overwritten
+* [ ] Figure out USB bandwidth issue to enable all four ports
