@@ -1,7 +1,7 @@
 # Multi-zone AirPlay2 audio receiver
 
 This is an br2-external tree to build and configure a Raspberry Pi
-as a multi-zone AirPlay2 receiver using the internal audio hardare
+as a multi-zone AirPlay receiver using the internal audio hardare
 as well as attached USB audio devices.  The resulting SD card image
 is mounted read-only so that it hopefully won't get corrupted due to
 wear.
@@ -24,6 +24,9 @@ will be in the top level directory for flashing onto the Pi.
 
 Boot the pi on the ethernet and it should show up as `audio-ABCDEF` in
 your AirPlay picker.
+
+Note that the system is configured as AirPlay 1, not 2, since the remote
+control functions aren't implemented in the newer protocol.
 
 ## Naming the host and channels
 
@@ -53,3 +56,4 @@ TODO:
 * [X] Friendly names for the audio channels
 * [x] Preserve config if only the `mmcblk0p2` image is overwritten
 * [ ] Figure out USB bandwidth issue to enable all four ports
+* [ ] AirPlay 2 remote controls are broken
