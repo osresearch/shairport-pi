@@ -60,6 +60,15 @@ alsa =
         output_device = "default:$num";
 };
 
+mqtt =
+{
+	enabled = "yes";
+	hostname = "dashboard";
+	topic = "audio/$name";
+	publish_parsed = "yes";
+	publish_cover = "no";
+	enable_remote = "yes";
+};
 EOF
 
         echo "Start shairport-sync.$num: $name"
