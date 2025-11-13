@@ -29,11 +29,12 @@ for card in /sys/class/sound/card* ; do
 		echo "$card: Builtin audio"
 	elif echo "$dev" | grep -q usb ; then
 		# this is a usb, with up to four slots
-		id="$(echo $dev | sed 's/.*\/[0-9]-[0-9]\.\([0-9]\):1.0\/sound\/card.*/\1/')"
+		#id="$(echo $dev | sed 's/.*\/[0-9]-[0-9]\.\([0-9]\):1.0\/sound\/card.*/\1/')"
+		id="$(echo $dev | sed 's/.*\/\([^/]*\):1.0\/sound\/card.*/\1/')"
 		echo "$card: USB port $id"
 	else
-		# this is unkown, so we won't use it
-		id=XXX
+		# this is unknown, give it a generic name
+		id="card$num"
 	fi
 
 	# see if there is a file on the boot partition that names
